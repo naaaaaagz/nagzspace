@@ -1,28 +1,7 @@
 User-agent: *
-Disallow: /admin/
-Disallow: /login/
-Disallow: /cgi-bin/
-Disallow: /private/
-Disallow: /tmp/
 Allow: /
 
-# Allow major search engines explicitly
-User-agent: Googlebot
-Allow: /
-
-User-agent: Googlebot-Image
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: DuckDuckBot
-Allow: /
-
-User-agent: Yandex
-Allow: /
-
-# Disallow known bad/malicious bots
+# Block SEO crawlers that only scrape
 User-agent: AhrefsBot
 Disallow: /
 
@@ -41,5 +20,4 @@ Disallow: /
 User-agent: ZoominfoBot
 Disallow: /
 
-# Sitemap (optional but recommended)
-Sitemap: https://davidhalmi.com/sitemap.xml
+Sitemap: https://nagz.space/sitemap.xml

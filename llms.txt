@@ -1,15 +1,24 @@
-# Dávid Halmi
+# NAGZ.SPACE
 
-> Personal hub for Dávid Halmi: career links, music/audio commissions, hobby music, mixed media art, playlists, socials, and other projects.
+> Personal hub of Nagz a.k.a. Dávid Halmi: hobby music, music and audio commissions, mixed media art, Spotify playlists, career links and socials.
 
-## Main Links
+## Main links
 
-- [Career CV links](https://davidhalmi.com/): Career, CV, and LinkedIn links.
-- [MusicOnPurpose](https://musiconpurpose.net/): Music and audio commissions.
-- [Nagz Space](https://nagz.space/): Hobby music and releases.
-- [OkayCoolWowEtc](https://okaycoolwowetc.com/): Mixed media art.
+- [Career](https://davidhalmi.com/): CV, career and LinkedIn links. Managing CRM, marketing, IT projects, building sites and other roles.
+- [MusicOnPurpose](https://musiconpurpose.net/): Music and audio commissions, with a reference page.
+- [Hobby music](https://music.nagz.space): Music released mainly as Nagz, member of Maniacs Of Noise since 2014.
+- [OkayCoolWowEtc](https://okaycoolwowetc.com/): Mixed media art, mostly acrylic and fuse beads on canvas.
+- [Playlists](https://playlists.nagz.space): Curated Spotify playlists.
 
 ## Optional
 
-- [AFK is silent](https://linktr.ee/afk_is_silent): Short form geography, jingles, and facts content.
-- [Spotify playlists](https://open.spotify.com/user/11154427361/playlists): Curated playlists.
+- [AFK is silent](https://linktr.ee/afk_is_silent): Short form geography, jingles and facts content.
+
+## Socials
+
+- [Bluesky](https://bsky.app/profile/naaaaaagz.bsky.social)
+- [Instagram](https://instagram.com/naaaaaagz)
+- [X / Twitter](https://x.com/naaaaaagz)
+- [Mastodon](https://mastodon.social/@naaaaaagz)
+- [YouTube](https://www.youtube.com/@naaaaaagz)
+- [Twitch](https://www.twitch.tv/naaaaaagz)
