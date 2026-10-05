@@ -59,6 +59,32 @@
   }
   .page { position: relative; z-index: 1; }
 
+  /* ---------- chill toggle ---------- */
+  .page, .footer { transition: opacity .8s ease; }
+  body.chilling .page, body.chilling .footer { opacity: 0; pointer-events: none; }
+  .chill-toggle {
+    position: fixed;
+    top: calc(12px + env(safe-area-inset-top, 0px));
+    right: calc(12px + env(safe-area-inset-right, 0px));
+    z-index: 3;
+    padding: 7px 10px;
+    border: 1px solid rgba(170, 182, 255, .35);
+    border-radius: 4px;
+    color: var(--ink);
+    background: rgba(5, 7, 26, .55);
+    font-family: var(--body);
+    font-size: .65rem;
+    line-height: 1.4;
+    white-space: nowrap;
+    font-weight: 600;
+    letter-spacing: .14em;
+    cursor: pointer;
+    transition: opacity .8s ease, border-color .2s ease;
+  }
+  .chill-toggle[aria-pressed="true"] { opacity: .45; }
+  .chill-toggle:hover { border-color: var(--soft); }
+  .chill-toggle:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+
   /* ---------- header ---------- */
   .intro { text-align: center; padding: clamp(22px, 4.5vh, 44px) 16px 0; }
   .logo {
@@ -260,12 +286,14 @@
     .strip-inner .btn { grid-column: 2; grid-row: 1; }
   }
   @media (max-width: 560px) {
+    .chill-toggle[aria-pressed="true"] { opacity: .6; }
     .hello { white-space: normal; font-size: .66rem; }
     .hello .line { display: block; }
     .strip-inner { grid-template-columns: 1fr; }
     .strip-inner .btn { grid-column: 1; grid-row: 3; justify-self: start; }
   }
   @media (prefers-reduced-motion: reduce) {
+    .page, .footer, .chill-toggle { transition: none; }
     .intro > * { animation: none; opacity: 1; }
     .future span { animation: none; }
   }
@@ -275,6 +303,7 @@
 <canvas id="sky" aria-hidden="true"></canvas>
 <canvas id="meteors" aria-hidden="true"></canvas>
 <div class="vignette"></div>
+<button class="chill-toggle" type="button" aria-pressed="false" aria-label="CHILL: show only the space background">CHILL</button>
 
 <div class="page">
   <header class="intro">
@@ -345,6 +374,18 @@
 </footer>
 
 <script>
+(() => {
+  const toggle = document.querySelector('.chill-toggle');
+  const content = document.querySelectorAll('.page, .footer');
+  toggle.addEventListener('click', () => {
+    const chilling = document.body.classList.toggle('chilling');
+    toggle.setAttribute('aria-pressed', String(chilling));
+    toggle.textContent = chilling ? 'UNCHILL' : 'CHILL';
+    toggle.setAttribute('aria-label', chilling ? 'UNCHILL: restore page content' : 'CHILL: show only the space background');
+    content.forEach((element) => { element.inert = chilling; });
+  });
+})();
+
 (() => {
   'use strict';
 
