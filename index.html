@@ -62,7 +62,7 @@
   /* ---------- chill toggle ---------- */
   .page, .footer { transition: opacity .8s ease; }
   body.chilling .page, body.chilling .footer { opacity: 0; pointer-events: none; }
-  .chill-toggle {
+  .chill-toggle, .motion-toggle {
     position: fixed;
     top: calc(12px + env(safe-area-inset-top, 0px));
     right: calc(12px + env(safe-area-inset-right, 0px));
@@ -84,6 +84,11 @@
   .chill-toggle[aria-pressed="true"] { opacity: .45; }
   .chill-toggle:hover { border-color: var(--soft); }
   .chill-toggle:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+  .motion-toggle { top: calc(48px + env(safe-area-inset-top, 0px)); font-size: .58rem; }
+  .motion-toggle[hidden] { display: none; }
+  .motion-toggle:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+  .portable-device .chill-toggle { padding: 5px 8px; font-size: .55rem; }
+  .portable-device .chill-toggle[aria-pressed="true"] { opacity: .6; }
 
   /* ---------- header ---------- */
   .intro { text-align: center; padding: clamp(22px, 4.5vh, 44px) 16px 0; }
@@ -286,7 +291,6 @@
     .strip-inner .btn { grid-column: 2; grid-row: 1; }
   }
   @media (max-width: 560px) {
-    .chill-toggle[aria-pressed="true"] { opacity: .6; }
     .hello { white-space: normal; font-size: .66rem; }
     .hello .line { display: block; }
     .strip-inner { grid-template-columns: 1fr; }
@@ -306,6 +310,7 @@
 <button class="chill-toggle" type="button" aria-pressed="false" aria-label="CHILL: show only the space background">CHILL</button>
 
 <div class="page">
+  <button class="motion-toggle" type="button" hidden>ENABLE MOTION</button>
   <header class="intro">
     <img class="logo" src="nagzlogo_transp_white.png" alt="Nagz" width="778" height="260">
     <p class="hello"><span class="line">Welcome. I am <span class="name">Nagz</span> a.k.a <span class="name">Dávid</span>.</span> <span class="line">I do all sorts of stuff.</span></p>
@@ -375,6 +380,11 @@
 
 <script>
 (() => {
+  // Device identity, rather than viewport width, keeps narrow desktops on mouse controls.
+  const portable = navigator.userAgentData?.mobile === true
+    || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+    || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  document.body.classList.toggle('portable-device', portable);
   const toggle = document.querySelector('.chill-toggle');
   const content = document.querySelectorAll('.page, .footer');
   toggle.addEventListener('click', () => {
@@ -701,11 +711,91 @@
   // mouse / touch → target offset, eased with inertia
   const target = { x: 0, y: 0 }, cur = { x: 0, y: 0 };
   const influence = reduceMotion ? 0.35 : 1;
+  let motionActive = false;
   window.addEventListener('pointermove', (e) => {
+    if (motionActive) return;
     target.x = (e.clientX / window.innerWidth - 0.5) * 2;
     target.y = (e.clientY / window.innerHeight - 0.5) * 2;
   }, { passive: true });
-  document.addEventListener('pointerleave', () => { target.x = 0; target.y = 0; });
+  document.addEventListener('pointerleave', () => {
+    if (!motionActive) { target.x = 0; target.y = 0; }
+  });
+
+  // Relative device rotation handles panning even when the phone starts upright.
+  // The first valid reading is the neutral pose; no compass heading is needed.
+  const orientationAPI = window.DeviceOrientationEvent;
+  const motionToggle = document.querySelector('.motion-toggle');
+  let neutralRotation = null;
+  function deviceRotation(alpha, beta, gamma) {
+    const a = alpha * DEG, b = beta * DEG, g = gamma * DEG;
+    const ca = Math.cos(a), sa = Math.sin(a);
+    const cb = Math.cos(b), sb = Math.sin(b);
+    const cg = Math.cos(g), sg = Math.sin(g);
+    // Rz(alpha) * Rx(beta) * Ry(gamma), in row-major order.
+    return [
+      ca * cg - sa * sb * sg, -sa * cb, ca * sg + sa * sb * cg,
+      sa * cg + ca * sb * sg, ca * cb, sa * sg - ca * sb * cg,
+      -cb * sg, sb, cb * cg,
+    ];
+  }
+  function followOrientation(event) {
+    if (![event.alpha, event.beta, event.gamma].every(Number.isFinite)) return;
+    const rotation = deviceRotation(event.alpha, event.beta, event.gamma);
+    if (!neutralRotation) {
+      neutralRotation = rotation;
+      motionActive = true;
+      target.x = target.y = cur.x = cur.y = 0;
+      motionToggle.hidden = true;
+      return;
+    }
+    // Express the current viewing direction in the original device frame.
+    const forward = [0, 1, 2].map((column) => -(
+      neutralRotation[column] * rotation[2]
+      + neutralRotation[column + 3] * rotation[5]
+      + neutralRotation[column + 6] * rotation[8]
+    ));
+    const angle = (window.screen.orientation?.angle ?? window.orientation ?? 0) * DEG;
+    const x = forward[0] * Math.cos(angle) + forward[1] * Math.sin(angle);
+    const y = -forward[0] * Math.sin(angle) + forward[1] * Math.cos(angle);
+    const clamp = (value) => Math.max(-1, Math.min(1, value));
+    target.x = clamp(-Math.atan2(x, -forward[2]) / (25 * DEG));
+    target.y = clamp(Math.atan2(y, Math.hypot(x, forward[2])) / (25 * DEG));
+  }
+  function startMotion() {
+    window.addEventListener('deviceorientation', followOrientation, { passive: true });
+  }
+  if (document.body.classList.contains('portable-device') && orientationAPI && window.isSecureContext) {
+    if (typeof orientationAPI.requestPermission === 'function') {
+      motionToggle.hidden = false;
+      motionToggle.addEventListener('click', async () => {
+        motionToggle.disabled = true;
+        try {
+          const permission = await orientationAPI.requestPermission();
+          if (permission === 'granted') {
+            startMotion();
+            motionToggle.hidden = true;
+          } else {
+            motionToggle.textContent = 'MOTION BLOCKED';
+            motionToggle.title = 'Allow motion access in your browser settings to enable device panning.';
+          }
+        } catch {
+          motionToggle.textContent = 'RETRY MOTION';
+          motionToggle.disabled = false;
+        }
+      });
+    } else {
+      startMotion();
+    }
+    const resetMotion = () => {
+      neutralRotation = null;
+      target.x = target.y = cur.x = cur.y = 0;
+    };
+    if (window.screen.orientation?.addEventListener) {
+      window.screen.orientation.addEventListener('change', resetMotion);
+    } else {
+      window.addEventListener('orientationchange', resetMotion);
+    }
+  }
 
   // ---------- meteors: rare, faint, on a 2D overlay ----------
   const meteorCanvas = document.getElementById('meteors');
