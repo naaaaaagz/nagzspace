@@ -62,7 +62,7 @@
   /* ---------- chill toggle ---------- */
   .page, .footer { transition: opacity .8s ease; }
   body.chilling .page, body.chilling .footer { opacity: 0; pointer-events: none; }
-  .chill-toggle, .motion-toggle {
+  .chill-toggle {
     position: fixed;
     top: calc(12px + env(safe-area-inset-top, 0px));
     right: calc(12px + env(safe-area-inset-right, 0px));
@@ -84,9 +84,6 @@
   .chill-toggle[aria-pressed="true"] { opacity: .45; }
   .chill-toggle:hover { border-color: var(--soft); }
   .chill-toggle:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
-  .motion-toggle { top: calc(48px + env(safe-area-inset-top, 0px)); font-size: .58rem; }
-  .motion-toggle[hidden] { display: none; }
-  .motion-toggle:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
   .portable-device .chill-toggle { padding: 5px 8px; font-size: .55rem; }
   .portable-device .chill-toggle[aria-pressed="true"] { opacity: .6; }
 
@@ -310,7 +307,6 @@
 <button class="chill-toggle" type="button" aria-pressed="false" aria-label="CHILL: show only the space background">CHILL</button>
 
 <div class="page">
-  <button class="motion-toggle" type="button" hidden>ENABLE MOTION</button>
   <header class="intro">
     <img class="logo" src="nagzlogo_transp_white.png" alt="Nagz" width="778" height="260">
     <p class="hello"><span class="line">Welcome. I am <span class="name">Nagz</span> a.k.a <span class="name">Dávid</span>.</span> <span class="line">I do all sorts of stuff.</span></p>
@@ -724,7 +720,6 @@
   // Relative device rotation handles panning even when the phone starts upright.
   // The first valid reading is the neutral pose; no compass heading is needed.
   const orientationAPI = window.DeviceOrientationEvent;
-  const motionToggle = document.querySelector('.motion-toggle');
   let neutralRotation = null;
   function deviceRotation(alpha, beta, gamma) {
     const a = alpha * DEG, b = beta * DEG, g = gamma * DEG;
@@ -745,7 +740,6 @@
       neutralRotation = rotation;
       motionActive = true;
       target.x = target.y = cur.x = cur.y = 0;
-      motionToggle.hidden = true;
       return;
     }
     // Express the current viewing direction in the original device frame.
@@ -758,33 +752,25 @@
     const x = forward[0] * Math.cos(angle) + forward[1] * Math.sin(angle);
     const y = -forward[0] * Math.sin(angle) + forward[1] * Math.cos(angle);
     const clamp = (value) => Math.max(-1, Math.min(1, value));
-    target.x = clamp(-Math.atan2(x, -forward[2]) / (25 * DEG));
-    target.y = clamp(Math.atan2(y, Math.hypot(x, forward[2])) / (25 * DEG));
+    target.x = clamp(Math.atan2(x, -forward[2]) / (25 * DEG));
+    target.y = clamp(-Math.atan2(y, Math.hypot(x, forward[2])) / (25 * DEG));
   }
   function startMotion() {
     window.addEventListener('deviceorientation', followOrientation, { passive: true });
   }
   if (document.body.classList.contains('portable-device') && orientationAPI && window.isSecureContext) {
+    // Listen immediately on devices where access is already allowed.
+    startMotion();
     if (typeof orientationAPI.requestPermission === 'function') {
-      motionToggle.hidden = false;
-      motionToggle.addEventListener('click', async () => {
-        motionToggle.disabled = true;
+      // Some browsers require a user gesture even without an on-page motion control.
+      document.addEventListener('click', async () => {
+        if (motionActive) return;
         try {
-          const permission = await orientationAPI.requestPermission();
-          if (permission === 'granted') {
-            startMotion();
-            motionToggle.hidden = true;
-          } else {
-            motionToggle.textContent = 'MOTION BLOCKED';
-            motionToggle.title = 'Allow motion access in your browser settings to enable device panning.';
-          }
+          await orientationAPI.requestPermission();
         } catch {
-          motionToggle.textContent = 'RETRY MOTION';
-          motionToggle.disabled = false;
+          // Keep the existing pointer/touch fallback if sensor access is unavailable.
         }
-      });
-    } else {
-      startMotion();
+      }, { once: true });
     }
     const resetMotion = () => {
       neutralRotation = null;
