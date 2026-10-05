@@ -5,16 +5,35 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="author" content="nagz">
 <meta name="keywords" content="nagz, music, songs, producer, electronic, beats, sound design, art, mixed media, mixed media art, career, hire, experimental, creative audio, composer, creative, portfolio, art">
-<meta name="description" content="NAGZ.SPACE">
+<meta name="description" content="Nagz a.k.a. Dávid Halmi: hobby music, music and audio commissions, mixed media art, Spotify playlists and career links.">
 <title>NAGZ.SPACE</title>
+<link rel="canonical" href="https://nagz.space/">
+<meta name="theme-color" content="#03040d">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NAGZ.SPACE">
+<meta property="og:title" content="NAGZ.SPACE">
+<meta property="og:description" content="Nagz a.k.a. Dávid: hobby music, commissions, mixed media art, playlists and more.">
+<meta property="og:url" content="https://nagz.space/">
+<meta property="og:image" content="https://nagz.space/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The Nagz logo floating in a violet starfield">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="manifest" href="site.webmanifest">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600&family=Michroma&display=swap" rel="stylesheet">
+<link rel="preload" href="assets/fonts/michroma-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/chakra-petch-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+  /* self-hosted fonts (SIL OFL, licences in assets/fonts) */
+  @font-face { font-family: 'Michroma'; font-style: normal; font-weight: 400; font-display: swap; src: url('assets/fonts/michroma-latin-400-normal.woff2') format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+  @font-face { font-family: 'Michroma'; font-style: normal; font-weight: 400; font-display: swap; src: url('assets/fonts/michroma-latin-ext-400-normal.woff2') format('woff2'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+  @font-face { font-family: 'Chakra Petch'; font-style: normal; font-weight: 400; font-display: swap; src: url('assets/fonts/chakra-petch-latin-400-normal.woff2') format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+  @font-face { font-family: 'Chakra Petch'; font-style: normal; font-weight: 400; font-display: swap; src: url('assets/fonts/chakra-petch-latin-ext-400-normal.woff2') format('woff2'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+  @font-face { font-family: 'Chakra Petch'; font-style: normal; font-weight: 600; font-display: swap; src: url('assets/fonts/chakra-petch-latin-600-normal.woff2') format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+  @font-face { font-family: 'Chakra Petch'; font-style: normal; font-weight: 600; font-display: swap; src: url('assets/fonts/chakra-petch-latin-ext-600-normal.woff2') format('woff2'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+
   :root {
     --void: #03040d;
     --ink: #f1f2ff;
@@ -89,6 +108,7 @@
 
   /* ---------- header ---------- */
   .intro { text-align: center; padding: clamp(22px, 4.5vh, 44px) 16px 0; }
+  .logo-wrap { margin: 0; line-height: 0; }
   .logo {
     display: block;
     width: clamp(130px, 17vw, 210px);
@@ -277,9 +297,9 @@
   .copyright {
     margin: 2px 0 0;
     font-family: var(--body);
-    font-size: .58rem;
+    font-size: .65rem;
     letter-spacing: .08em;
-    color: rgba(255, 255, 255, .4);
+    color: rgba(255, 255, 255, .6);
   }
 
   @media (max-width: 820px) {
@@ -308,8 +328,8 @@
 
 <div class="page">
   <header class="intro">
-    <img class="logo" src="nagzlogo_transp_white.png" alt="Nagz" width="778" height="260">
-    <p class="hello"><span class="line">Welcome. I am <span class="name">Nagz</span> a.k.a <span class="name">Dávid</span>.</span> <span class="line">I do all sorts of stuff.</span></p>
+    <h1 class="logo-wrap"><img class="logo" src="nagzlogo_transp_white.png" alt="Nagz" width="778" height="260"></h1>
+    <p class="hello"><span class="line">Welcome. I am <span class="name">Nagz</span> a.k.a. <span class="name">Dávid</span>.</span> <span class="line">I do all sorts of stuff.</span></p>
   </header>
 
   <hr class="raster">
@@ -319,7 +339,7 @@
       <div class="strip-inner">
         <h2>Career <span>Hire me!</span></h2>
         <div><p>Managing CRM, Marketing, IT Projects, Building sites &amp; various other possible roles.</p></div>
-        <a class="btn" title="DavidHalmi.com" href="https://davidhalmi.com/" target="_blank" rel="noopener noreferrer">DavidHalmi.com<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5"/></svg></a>
+        <a class="btn" href="https://davidhalmi.com/" target="_blank" rel="noopener noreferrer">DavidHalmi.com<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5"/></svg></a>
       </div>
     </section>
 
@@ -327,7 +347,7 @@
       <div class="strip-inner">
         <h2>Music commissions <span>MusicOnPurpose</span></h2>
         <div><p>You need tunes or sounds for your next project? Good thing I’m here. Check my reference page!</p></div>
-        <a class="btn" title="MusicOnPurpose" href="https://musiconpurpose.net/" target="_blank" rel="noopener noreferrer">MusicOnPurpose.net<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5"/></svg></a>
+        <a class="btn" href="https://musiconpurpose.net/" target="_blank" rel="noopener noreferrer">MusicOnPurpose.net<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5"/></svg></a>
       </div>
     </section>
 
@@ -335,7 +355,7 @@
       <div class="strip-inner">
         <h2>Hobby music <span>Mainly as Nagz</span></h2>
         <div><p>Pretty much every genre covered since 1996, member of Maniacs Of Noise since 2014.</p></div>
-        <a class="btn" title="Music.Nagz.Space" href="https://music.nagz.space" target="_blank" rel="noopener noreferrer">music.nagz.space<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5"/></svg></a>
+        <a class="btn" href="https://music.nagz.space" target="_blank" rel="noopener noreferrer">music.nagz.space<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5"/></svg></a>
       </div>
     </section>
 
@@ -343,7 +363,7 @@
       <div class="strip-inner">
         <h2>Mixed Media Art <span>OkayCoolWowEtc</span></h2>
         <div><p>Mixed media art (mostly acrylic + fuse beads on canvas), hit me up if you want one, new or existing!</p></div>
-        <a class="btn" title="OkayCoolWowEtc" href="https://okaycoolwowetc.com/" target="_blank" rel="noopener noreferrer">OkayCoolWowEtc.com<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5"/></svg></a>
+        <a class="btn" href="https://okaycoolwowetc.com/" target="_blank" rel="noopener noreferrer">OkayCoolWowEtc.com<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5"/></svg></a>
       </div>
     </section>
 
@@ -351,12 +371,12 @@
       <div class="strip-inner">
         <h2>Playlists <span>My Spotify playlists</span></h2>
         <div><p>64 playlists, constantly curated for your listening pleasure.</p></div>
-        <a class="btn" title="Spotify playlists made by Nagz" href="https://playlists.nagz.space" target="_blank" rel="noopener noreferrer">playlists.nagz.space<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5"/></svg></a>
+        <a class="btn" href="https://playlists.nagz.space" target="_blank" rel="noopener noreferrer">playlists.nagz.space<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5"/></svg></a>
       </div>
     </section>
   </main>
 
-  <p class="future"><span>Pop in to see my future projects, there are several, from media to brainy things!</span></p>
+  <p class="future"><span>More projects popping up soon, from media to brainy things!</span></p>
 </div>
 
 <footer class="footer">
@@ -364,7 +384,7 @@
       <a href="mailto:naaaaaagz@gmail.com" title="Email" aria-label="Email"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg></a>
       <a href="https://bsky.app/profile/naaaaaagz.bsky.social" title="Bluesky" aria-label="Bluesky" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.202 2.857C7.954 4.922 10.913 9.11 12 11.358c1.087-2.247 4.046-6.436 6.798-8.501C20.783 1.366 24 .213 24 3.883c0 .732-.42 6.156-.667 7.037-.856 3.061-3.978 3.842-6.755 3.37 4.854.826 6.089 3.562 3.422 6.299-5.065 5.196-7.28-1.304-7.847-2.97-.104-.305-.152-.448-.153-.327 0-.121-.05.022-.153.327-.568 1.666-2.782 8.166-7.847 2.97-2.667-2.737-1.432-5.473 3.422-6.3-2.777.473-5.899-.308-6.755-3.369C.42 10.04 0 4.615 0 3.883c0-3.67 3.217-2.517 5.202-1.026"/></svg></a>
       <a href="https://instagram.com/naaaaaagz" title="Instagram" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"/></svg></a>
-      <a href="https://mastodon.social/@naaaaaagz" title="Mastodon" aria-label="Mastodon" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.268 5.313c-.35-2.578-2.617-4.61-5.304-5.004C17.51.242 15.792 0 11.813 0h-.03c-3.98 0-4.835.242-5.288.309C3.882.692 1.496 2.518.917 5.127.64 6.412.61 7.837.661 9.143c.074 1.874.088 3.745.26 5.611.118 1.24.325 2.47.62 3.68.55 2.237 2.777 4.098 4.96 4.857 2.336.792 4.849.923 7.256.38.265-.061.527-.132.786-.213.585-.184 1.27-.39 1.774-.753a.057.057 0 0 0 .023-.043v-1.809a.052.052 0 0 0-.02-.041.053.053 0 0 0-.046-.01 20.282 20.282 0 0 1-4.709.545c-2.73 0-3.463-1.284-3.674-1.818a5.593 5.593 0 0 1-.319-1.433.053.053 0 0 1 .066-.054c1.517.363 3.072.546 4.632.546.376 0 .75 0 1.125-.01 1.57-.044 3.224-.124 4.768-.422.038-.008.077-.015.11-.024 2.435-.464 4.753-1.92 4.989-5.604.008-.145.03-1.52.03-1.67.002-.512.167-3.63-.024-5.545zm-3.748 9.195h-2.561V8.29c0-1.309-.55-1.976-1.67-1.976-1.23 0-1.846.79-1.846 2.35v3.403h-2.546V8.663c0-1.56-.617-2.35-1.848-2.35-1.112 0-1.668.668-1.67 1.977v6.218H4.822V8.102c0-1.31.337-2.35 1.011-3.12.696-.77 1.608-1.164 2.74-1.164 1.311 0 2.302.5 2.962 1.498l.638 1.06.638-1.06c.66-.999 1.65-1.498 2.96-1.498 1.13 0 2.043.395 2.74 1.164.675.77 1.012 1.81 1.012 3.12z"/></svg></a>
+      <a href="https://mastodon.social/@naaaaaagz" title="Mastodon" aria-label="Mastodon" target="_blank" rel="me noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.268 5.313c-.35-2.578-2.617-4.61-5.304-5.004C17.51.242 15.792 0 11.813 0h-.03c-3.98 0-4.835.242-5.288.309C3.882.692 1.496 2.518.917 5.127.64 6.412.61 7.837.661 9.143c.074 1.874.088 3.745.26 5.611.118 1.24.325 2.47.62 3.68.55 2.237 2.777 4.098 4.96 4.857 2.336.792 4.849.923 7.256.38.265-.061.527-.132.786-.213.585-.184 1.27-.39 1.774-.753a.057.057 0 0 0 .023-.043v-1.809a.052.052 0 0 0-.02-.041.053.053 0 0 0-.046-.01 20.282 20.282 0 0 1-4.709.545c-2.73 0-3.463-1.284-3.674-1.818a5.593 5.593 0 0 1-.319-1.433.053.053 0 0 1 .066-.054c1.517.363 3.072.546 4.632.546.376 0 .75 0 1.125-.01 1.57-.044 3.224-.124 4.768-.422.038-.008.077-.015.11-.024 2.435-.464 4.753-1.92 4.989-5.604.008-.145.03-1.52.03-1.67.002-.512.167-3.63-.024-5.545zm-3.748 9.195h-2.561V8.29c0-1.309-.55-1.976-1.67-1.976-1.23 0-1.846.79-1.846 2.35v3.403h-2.546V8.663c0-1.56-.617-2.35-1.848-2.35-1.112 0-1.668.668-1.67 1.977v6.218H4.822V8.102c0-1.31.337-2.35 1.011-3.12.696-.77 1.608-1.164 2.74-1.164 1.311 0 2.302.5 2.962 1.498l.638 1.06.638-1.06c.66-.999 1.65-1.498 2.96-1.498 1.13 0 2.043.395 2.74 1.164.675.77 1.012 1.81 1.012 3.12z"/></svg></a>
       <a href="https://x.com/naaaaaagz" title="X / Twitter" aria-label="X / Twitter" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.234 10.162 22.977 0h-2.072l-7.591 8.824L7.251 0H.258l9.168 13.343L.258 24H2.33l8.016-9.318L16.749 24h6.993zm-2.837 3.299-.929-1.329L3.076 1.56h3.182l5.965 8.532.929 1.329 7.754 11.09h-3.182z"/></svg></a>
       <a href="https://www.youtube.com/@naaaaaagz" title="YouTube" aria-label="YouTube" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
       <a href="https://www.twitch.tv/naaaaaagz" title="Twitch" aria-label="Twitch" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"/></svg></a>
@@ -508,14 +528,37 @@
       col += haze * glow * glow * 0.2;
       col += vec3(0.06, 0.09, 0.30) * band * 0.07;  // faint diffuse band light
       col *= 1.0 - dust * 0.75;
-
-      // triangular dither kills banding in the dark gradients
-      float r = fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453)
-              + fract(sin(dot(gl_FragCoord.xy, vec2(93.989, 67.345))) * 24634.6345) - 1.0;
-      col += r / 255.0;
       gl_FragColor = vec4(col, 1.0);
     }
   `);
+
+  // The nebula is soft and drifts very slowly, so it is drawn at half resolution
+  // into a texture and stretched to full size: about 4x less GPU work per frame.
+  const NEBULA_SCALE = 0.5;
+  const nebulaBlit = program(`
+    attribute vec2 aPos;
+    varying vec2 vUv;
+    void main() { vUv = aPos * 0.5 + 0.5; gl_Position = vec4(aPos, 0.0, 1.0); }
+  `, `
+    precision mediump float;
+    varying vec2 vUv;
+    uniform sampler2D uTex;
+    void main() {
+      vec3 col = texture2D(uTex, vUv).rgb;
+      // triangular dither kills banding in the dark gradients
+      float r = fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453)
+              + fract(sin(dot(gl_FragCoord.xy, vec2(93.989, 67.345))) * 24634.6345) - 1.0;
+      gl_FragColor = vec4(col + r / 255.0, 1.0);
+    }
+  `);
+  const nebulaTex = gl.createTexture();
+  gl.bindTexture(gl.TEXTURE_2D, nebulaTex);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  const nebulaFbo = gl.createFramebuffer();
+  let NW = 1, NH = 1;
 
   // ---------- 2. Stars ----------
   const stars = program(`
@@ -688,7 +731,13 @@
     H = Math.floor(window.innerHeight * dpr);
     canvas.width = W; canvas.height = H;
     meteorCanvas.width = W; meteorCanvas.height = H;
-    gl.viewport(0, 0, W, H);
+    NW = Math.max(1, Math.ceil(W * NEBULA_SCALE));
+    NH = Math.max(1, Math.ceil(H * NEBULA_SCALE));
+    gl.bindTexture(gl.TEXTURE_2D, nebulaTex);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, NW, NH, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+    gl.bindFramebuffer(gl.FRAMEBUFFER, nebulaFbo);
+    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, nebulaTex, 0);
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
   }
 
   // world -> camera: roll * pitch * yaw, returned column-major for GL
@@ -713,9 +762,10 @@
     target.x = (e.clientX / window.innerWidth - 0.5) * 2;
     target.y = (e.clientY / window.innerHeight - 0.5) * 2;
   }, { passive: true });
-  document.addEventListener('pointerleave', () => {
-    if (!motionActive) { target.x = 0; target.y = 0; }
-  });
+  // When the cursor leaves the window, drift back to centre (same easing as normal).
+  const recenter = () => { if (!motionActive) { target.x = 0; target.y = 0; } };
+  document.documentElement.addEventListener('mouseleave', recenter);
+  window.addEventListener('blur', recenter);
 
   // Relative device rotation handles panning even when the phone starts upright.
   // The first valid reading is the neutral pose; no compass heading is needed.
@@ -828,11 +878,10 @@
   function disableAll() { for (let i = 0; i < 8; i++) gl.disableVertexAttribArray(i); }
 
   // ---------- loop ----------
-  let last = performance.now(), time = 0, running = true;
+  let last = performance.now(), time = 0, rafId = 0;
   const drift = reduceMotion ? 0.05 : 0.22;                    // degrees per second of slow yaw
 
   function frame(now) {
-    if (!running) return;
     const dt = Math.min((now - last) / 1000, 0.1);
     last = now;
     time += dt;
@@ -849,7 +898,9 @@
 
     gl.disable(gl.BLEND);
 
-    // nebula
+    // nebula: render at half resolution into a texture...
+    gl.bindFramebuffer(gl.FRAMEBUFFER, nebulaFbo);
+    gl.viewport(0, 0, NW, NH);
     gl.useProgram(nebula.p);
     disableAll();
     gl.bindBuffer(gl.ARRAY_BUFFER, quadBuf);
@@ -859,6 +910,18 @@
     gl.uniform1f(nebula.u.uAspect, aspect);
     gl.uniform1f(nebula.u.uTime, time);
     gl.uniform3fv(nebula.u.uBand, bandN);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+
+    // ...then stretch it over the full screen
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+    gl.viewport(0, 0, W, H);
+    gl.useProgram(nebulaBlit.p);
+    disableAll();
+    gl.bindBuffer(gl.ARRAY_BUFFER, quadBuf);
+    attr(nebulaBlit.p, 'aPos', 2, 2, 0);
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, nebulaTex);
+    gl.uniform1i(nebulaBlit.u.uTex, 0);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
     gl.enable(gl.BLEND);
@@ -906,17 +969,21 @@
       drawMeteors(dt);
     }
 
-    requestAnimationFrame(frame);
+    rafId = requestAnimationFrame(frame);
   }
 
+  // Exactly one loop at a time: stop it when the tab is hidden, restart on return.
   document.addEventListener('visibilitychange', () => {
-    running = !document.hidden;
-    if (running) { last = performance.now(); requestAnimationFrame(frame); }
+    cancelAnimationFrame(rafId);
+    if (!document.hidden) {
+      last = performance.now();
+      rafId = requestAnimationFrame(frame);
+    }
   });
   window.addEventListener('resize', resize);
 
   resize();
-  requestAnimationFrame((t) => { last = t; frame(t); canvas.classList.add('ready'); });
+  rafId = requestAnimationFrame((t) => { last = t; frame(t); canvas.classList.add('ready'); });
 })();
 </script>
 </body>
