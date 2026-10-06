@@ -959,18 +959,19 @@
     rafId = requestAnimationFrame(frame);
   }
 
+  // The first frame also fades the sky in. Both the initial start and a return to a
+  // hidden tab use it, so a page opened in a background tab still reveals the sky.
+  const start = () => { rafId = requestAnimationFrame((t) => { last = t; frame(t); canvas.classList.add('ready'); }); };
+
   // Exactly one loop at a time: stop it when the tab is hidden, restart on return.
   document.addEventListener('visibilitychange', () => {
     cancelAnimationFrame(rafId);
-    if (!document.hidden) {
-      last = performance.now();
-      rafId = requestAnimationFrame(frame);
-    }
+    if (!document.hidden) start();
   });
   window.addEventListener('resize', resize);
 
   resize();
-  rafId = requestAnimationFrame((t) => { last = t; frame(t); canvas.classList.add('ready'); });
+  start();
 })();
 </script>
 </body>
