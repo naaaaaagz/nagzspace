@@ -71,7 +71,7 @@
     --card-edge: rgba(200, 208, 255, .14);
     --card-edge-hover: rgba(225, 230, 255, .45);
     --focus: rgba(225, 230, 255, .85);
-    --footer-h: 60px;
+    --footer-h: 44px;
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; min-height: 100%; }
@@ -101,8 +101,11 @@
   .page { position: relative; z-index: 1; }
 
   /* ---------- chill toggle ---------- */
-  .page, .footer { transition: opacity .8s ease; }
-  body.chilling .page, body.chilling .footer { opacity: 0; pointer-events: none; }
+  /* Fade the pieces, never a wrapper: a fading parent stops the cards' blur from seeing
+     the space behind the page until the fade ends. */
+  .intro, .card { transition: opacity .8s ease; }
+  body.chilling .page, body.chilling .footer { pointer-events: none; }
+  body.chilling .intro, body.chilling .card, body.chilling .footer { opacity: 0; }
   .chill-toggle {
     position: fixed;
     top: calc(12px + env(safe-area-inset-top, 0px));
@@ -127,43 +130,50 @@
   .chill-toggle:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
   .portable-device .chill-toggle { padding: 5px 8px; font-size: .55rem; }
   .portable-device .chill-toggle[aria-pressed="true"] { opacity: .6; }
+  /* desktop: bottom-right corner, level with the footer icons */
+  body:not(.portable-device) .chill-toggle { top: auto; bottom: calc(10px + env(safe-area-inset-bottom, 0px)); }
 
   /* ---------- header ---------- */
-  .intro { text-align: center; padding: clamp(22px, 4.5vh, 44px) 16px 0; }
-  .logo-wrap { margin: 0; line-height: 0; }
+  .intro {
+    --pad: clamp(22px, 4.5vh, 44px);
+    --logo-w: clamp(130px, 17vw, 210px);
+    position: relative;
+    text-align: center;
+    padding: var(--pad) 16px 0;
+  }
+  .logo-wrap { position: relative; z-index: 1; margin: 0; line-height: 0; }
   .logo {
     display: block;
-    width: clamp(130px, 17vw, 210px);
+    width: var(--logo-w);
     height: auto;
     margin: 0 auto;
     filter: drop-shadow(0 0 22px rgba(120, 140, 255, .3));
   }
-  .hello {
-    margin: 18px auto 0;
-    font-size: clamp(.64rem, .85vw, .74rem);
-    font-weight: 300;
-    letter-spacing: .2em;
-    line-height: 1.9;
-    white-space: nowrap;
-    color: rgba(215, 220, 250, .86);
-  }
-  .intro > *, .glyphline, .cards { opacity: 0; animation: arrive 1.6s cubic-bezier(.2,.7,.2,1) forwards; }
-  .intro > :nth-child(2) { animation-delay: .5s; }
-  .glyphline { animation-delay: .8s; }
-  .cards { animation-delay: 1s; }
-  @keyframes arrive { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
   /* ---------- scrolling name line ---------- */
+  /* Runs through the logo's side tips (half the logo's height: 260 / 2 of 778 x 260)
+     and fades out where it passes behind the logo. */
   .glyphline {
-    margin: clamp(26px, 5vh, 44px) 0 clamp(22px, 4vh, 36px);
+    --hole: calc(var(--logo-w) / 2);
+    position: absolute;
+    left: 0; right: 0;
+    top: calc(var(--pad) + var(--logo-w) * 130 / 778);
+    height: 2em;
+    margin-top: -1em;
     overflow: hidden;
     color: var(--soft);
     font-family: var(--glyphs);
     font-size: .78rem;
     line-height: 2;
     direction: ltr;
-    -webkit-mask-image: linear-gradient(to right, transparent, #000 15%, #000 85%, transparent);
-            mask-image: linear-gradient(to right, transparent, #000 15%, #000 85%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 12%,
+      #000 calc(50% - var(--hole) - 90px), transparent calc(50% - var(--hole) + 4px),
+      transparent calc(50% + var(--hole) - 4px), #000 calc(50% + var(--hole) + 90px),
+      #000 88%, transparent);
+            mask-image: linear-gradient(to right, transparent, #000 12%,
+      #000 calc(50% - var(--hole) - 90px), transparent calc(50% - var(--hole) + 4px),
+      transparent calc(50% + var(--hole) - 4px), #000 calc(50% + var(--hole) + 90px),
+      #000 88%, transparent);
   }
   .glyph-track { display: flex; width: max-content; opacity: .42; animation: glyph-scroll 150s linear infinite; }
   .glyph-set { display: flex; align-items: center; flex-shrink: 0; }
@@ -174,7 +184,7 @@
   /* ---------- cards ---------- */
   .cards {
     width: min(1080px, calc(100% - 32px));
-    margin: 0 auto;
+    margin: clamp(36px, 7vh, 64px) auto 0;
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 14px;
@@ -192,9 +202,11 @@
     border: 1px solid var(--card-edge);
     border-radius: 4px;
     background: linear-gradient(160deg, rgba(255, 255, 255, .07), rgba(255, 255, 255, .01)), var(--card);
+    -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
     color: var(--ink);
     text-decoration: none;
-    transition: transform .25s ease, border-color .25s ease, background-color .25s ease;
+    transition: transform .25s ease, border-color .25s ease, background-color .25s ease, opacity .8s ease;
   }
   .card.hire     { --a: 255, 150, 80; }
   .card.mop      { --a: 168, 120, 255; }
@@ -252,6 +264,8 @@
   a.card:hover svg, a.card:focus-visible svg { transform: translate(2px, -2px); }
   a.card:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
   .card.soon {
+    -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
     align-items: center;
     justify-content: center;
     opacity: .8;
@@ -266,12 +280,17 @@
     position: fixed;
     left: 0; right: 0; bottom: 0;
     z-index: 2;
-    padding: 8px 16px calc(6px + env(safe-area-inset-bottom, 0px));
-    background: rgba(0, 0, 0, .22);
+    padding: 8px 16px calc(8px + env(safe-area-inset-bottom, 0px));
+    text-align: center;
+    transition: opacity .8s ease, background-color .3s ease;
+  }
+  /* desktop: keep the icons clear of the corner Chill button, still centred */
+  body:not(.portable-device) .footer { padding-left: 96px; padding-right: 96px; }
+  /* phones and tablets: a backing appears only while cards scroll behind the icons */
+  .footer.over-cards {
+    background-color: rgba(0, 0, 0, .22);
     -webkit-backdrop-filter: blur(3px);
             backdrop-filter: blur(3px);
-    border-top: 1px solid rgba(255, 255, 255, .08);
-    text-align: center;
   }
   .socials { display: flex; justify-content: center; flex-wrap: wrap; gap: 4px; }
   .socials a {
@@ -284,31 +303,18 @@
   }
   .socials svg { width: 14px; height: 14px; fill: currentColor; }
   .socials a:hover, .socials a:focus-visible { background: #fff; color: #000; outline: none; }
-  .copyright {
-    margin: 2px 0 0;
-    font-family: var(--font);
-    font-size: .62rem;
-    font-weight: 300;
-    letter-spacing: .1em;
-    color: rgba(255, 255, 255, .6);
-  }
-  /* Sora draws © floating above the baseline; drop it so it sits on the line */
-  .copyright .copy { position: relative; top: .12em; }
 
   @media (max-width: 900px) {
     .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
   @media (max-width: 560px) {
-    .hello { white-space: normal; }
-    .hello .line { display: block; }
     /* one project per row; the three SOON cards share a row */
     .cards { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; }
     .card { grid-column: span 6; min-height: 0; }
     .card.soon { grid-column: span 2; min-height: 64px; font-size: .6rem; letter-spacing: .2em; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .page, .footer, .chill-toggle { transition: none; }
-    .intro > *, .glyphline, .cards { animation: none; opacity: 1; }
+    .intro, .footer, .chill-toggle { transition: none; }
     .glyph-track { animation: none; }
     .card, .card svg, a.card::before, a.card::after { transition: none; }
   }
@@ -323,16 +329,15 @@
 <div class="page">
   <header class="intro">
     <h1 class="logo-wrap"><img class="logo" src="nagzlogo_transp_white.png" alt="Nagz" width="778" height="260"></h1>
-    <p class="hello"><span class="line">Welcome. I am Nagz a.k.a. Dávid.</span> <span class="line">I do all sorts of stuff.</span></p>
+    <!-- "nagz" in many scripts; the second set repeats the first for a seamless loop -->
+    <div class="glyphline" aria-hidden="true">
+      <div class="glyph-track">
+        <div class="glyph-set"><span>𑁝𑁛𑁯𑁡</span><i></i><span>𐌿𐌰𐌾𐌶</span><i></i><span>🝠🜁🝭🜩</span><i></i><span>ՈԹՃՁ</span><i></i><span>ռձցջ</span><i></i><span>৸৭ৎ৶</span><i></i><span>ㄇㄙㆠㄋ</span><i></i><span>ᨈᨊᨌᨄ</span><i></i><span>𐊪𐊠𐋃𐋀</span><i></i><span>ᏁᎯᏵᎼ</span><i></i><span>nagz</span><i></i><span>门丹厶之</span><i></i><span>ꃞꎁꁅꑓ</span><i></i><span>ⲛⲁⳓⲹ</span><i></i><span>𒀃𒋻𒌷𒌭</span><i></i><span>₦₳₲₹</span><i></i><span>𐑍𐐨𐐾𐑌</span><i></i><span>𓉖𓂇𓌆𓃇</span><i></i><span>ኪሷፍጊ</span><i></i><span>იმჵჷ</span><i></i><span>ល៦១ឱ</span><i></i><span>ດຄເໄ</span><i></i><span>לפםה</span><i></i><span>റ൧൭ഉ</span><i></i><span>ꩳꩫ၎ဥ</span><i></i><span>ᱴᱧ᱙ᱮ</span><i></i><span>𐒌𐒚𐒛𐒒</span><i></i><span>NAGZ</span><i></i><span>𐑽𐑔𐑜𐑯</span><i></i><span>หค๔ใ</span><i></i><span>ⵄⴷⵛⵒ</span><i></i><span>ᑙᐄᑵᖢ</span><i></i><span>ꘗꕖꕄꔧ</span><i></i><span>ꏢꒈꐱꉓ</span><i></i></div>
+        <div class="glyph-set"><span>𑁝𑁛𑁯𑁡</span><i></i><span>𐌿𐌰𐌾𐌶</span><i></i><span>🝠🜁🝭🜩</span><i></i><span>ՈԹՃՁ</span><i></i><span>ռձցջ</span><i></i><span>৸৭ৎ৶</span><i></i><span>ㄇㄙㆠㄋ</span><i></i><span>ᨈᨊᨌᨄ</span><i></i><span>𐊪𐊠𐋃𐋀</span><i></i><span>ᏁᎯᏵᎼ</span><i></i><span>nagz</span><i></i><span>门丹厶之</span><i></i><span>ꃞꎁꁅꑓ</span><i></i><span>ⲛⲁⳓⲹ</span><i></i><span>𒀃𒋻𒌷𒌭</span><i></i><span>₦₳₲₹</span><i></i><span>𐑍𐐨𐐾𐑌</span><i></i><span>𓉖𓂇𓌆𓃇</span><i></i><span>ኪሷፍጊ</span><i></i><span>იმჵჷ</span><i></i><span>ល៦១ឱ</span><i></i><span>ດຄເໄ</span><i></i><span>לפםה</span><i></i><span>റ൧൭ഉ</span><i></i><span>ꩳꩫ၎ဥ</span><i></i><span>ᱴᱧ᱙ᱮ</span><i></i><span>𐒌𐒚𐒛𐒒</span><i></i><span>NAGZ</span><i></i><span>𐑽𐑔𐑜𐑯</span><i></i><span>หค๔ใ</span><i></i><span>ⵄⴷⵛⵒ</span><i></i><span>ᑙᐄᑵᖢ</span><i></i><span>ꘗꕖꕄꔧ</span><i></i><span>ꏢꒈꐱꉓ</span><i></i></div>
+      </div>
+    </div>
   </header>
 
-  <!-- "nagz" in many scripts; the second set repeats the first for a seamless loop -->
-  <div class="glyphline" aria-hidden="true">
-    <div class="glyph-track">
-      <div class="glyph-set"><span>𑁝𑁛𑁯𑁡</span><i></i><span>𐌿𐌰𐌾𐌶</span><i></i><span>🝠🜁🝭🜩</span><i></i><span>ՈԹՃՁ</span><i></i><span>ռձցջ</span><i></i><span>৸৭ৎ৶</span><i></i><span>ㄇㄙㆠㄋ</span><i></i><span>ᨈᨊᨌᨄ</span><i></i><span>𐊪𐊠𐋃𐋀</span><i></i><span>ᏁᎯᏵᎼ</span><i></i><span>nagz</span><i></i><span>门丹厶之</span><i></i><span>ꃞꎁꁅꑓ</span><i></i><span>ⲛⲁⳓⲹ</span><i></i><span>𒀃𒋻𒌷𒌭</span><i></i><span>₦₳₲₹</span><i></i><span>𐑍𐐨𐐾𐑌</span><i></i><span>𓉖𓂇𓌆𓃇</span><i></i><span>ኪሷፍጊ</span><i></i><span>იმჵჷ</span><i></i><span>ល៦១ឱ</span><i></i><span>ດຄເໄ</span><i></i><span>לפםה</span><i></i><span>റ൧൭ഉ</span><i></i><span>ꩳꩫ၎ဥ</span><i></i><span>ᱴᱧ᱙ᱮ</span><i></i><span>𐒌𐒚𐒛𐒒</span><i></i><span>NAGZ</span><i></i><span>𐑽𐑔𐑜𐑯</span><i></i><span>หค๔ใ</span><i></i><span>ⵄⴷⵛⵒ</span><i></i><span>ᑙᐄᑵᖢ</span><i></i><span>ꘗꕖꕄꔧ</span><i></i><span>ꏢꒈꐱꉓ</span><i></i></div>
-      <div class="glyph-set"><span>𑁝𑁛𑁯𑁡</span><i></i><span>𐌿𐌰𐌾𐌶</span><i></i><span>🝠🜁🝭🜩</span><i></i><span>ՈԹՃՁ</span><i></i><span>ռձցջ</span><i></i><span>৸৭ৎ৶</span><i></i><span>ㄇㄙㆠㄋ</span><i></i><span>ᨈᨊᨌᨄ</span><i></i><span>𐊪𐊠𐋃𐋀</span><i></i><span>ᏁᎯᏵᎼ</span><i></i><span>nagz</span><i></i><span>门丹厶之</span><i></i><span>ꃞꎁꁅꑓ</span><i></i><span>ⲛⲁⳓⲹ</span><i></i><span>𒀃𒋻𒌷𒌭</span><i></i><span>₦₳₲₹</span><i></i><span>𐑍𐐨𐐾𐑌</span><i></i><span>𓉖𓂇𓌆𓃇</span><i></i><span>ኪሷፍጊ</span><i></i><span>იმჵჷ</span><i></i><span>ល៦១ឱ</span><i></i><span>ດຄເໄ</span><i></i><span>לפםה</span><i></i><span>റ൧൭ഉ</span><i></i><span>ꩳꩫ၎ဥ</span><i></i><span>ᱴᱧ᱙ᱮ</span><i></i><span>𐒌𐒚𐒛𐒒</span><i></i><span>NAGZ</span><i></i><span>𐑽𐑔𐑜𐑯</span><i></i><span>หค๔ใ</span><i></i><span>ⵄⴷⵛⵒ</span><i></i><span>ᑙᐄᑵᖢ</span><i></i><span>ꘗꕖꕄꔧ</span><i></i><span>ꏢꒈꐱꉓ</span><i></i></div>
-    </div>
-  </div>
 
   <main class="cards" aria-label="What I do">
     <a class="card hire" href="https://davidhalmi.com/" target="_blank" rel="noopener noreferrer">
@@ -378,7 +383,6 @@
       <a href="https://paypal.me/naaaaaagz" title="PayPal" aria-label="PayPal" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.607 4.653H8.941L6.645 19.251H1.82L4.862 0h7.995c3.754 0 6.375 2.294 6.473 5.513-.648-.478-2.105-.86-3.722-.86m6.57 5.546c0 3.41-3.01 6.853-6.958 6.853h-2.493L11.595 24H6.74l1.845-11.538h3.592c4.208 0 7.346-3.634 7.153-6.949a5.24 5.24 0 0 1 2.848 4.686M9.653 5.546h6.408c.907 0 1.942.222 2.363.541-.195 2.741-2.655 5.483-6.441 5.483H8.714Z"/></svg></a>
       <a href="https://patreon.com/naaaaaagz" title="Patreon" aria-label="Patreon" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22.957 7.21c-.004-3.064-2.391-5.576-5.191-6.482-3.478-1.125-8.064-.962-11.384.604C2.357 3.231 1.093 7.391 1.046 11.54c-.039 3.411.302 12.396 5.369 12.46 3.765.047 4.326-4.804 6.068-7.141 1.24-1.662 2.836-2.132 4.801-2.618 3.376-.836 5.678-3.501 5.673-7.031Z"/></svg></a>
   </nav>
-  <p class="copyright"><span class="copy">©</span> nagz.space, 2026</p>
 </footer>
 
 <script>
@@ -397,6 +401,21 @@
     toggle.setAttribute('aria-label', chilling ? 'UNCHILL: restore page content' : 'CHILL: show only the space background');
     content.forEach((element) => { element.inert = chilling; });
   });
+
+  if (portable) {
+    const footer = document.querySelector('.footer');
+    const cards = document.querySelector('.cards');
+    let pending = false;
+    const update = () => {
+      pending = false;
+      const f = footer.getBoundingClientRect(), c = cards.getBoundingClientRect();
+      footer.classList.toggle('over-cards', c.top < f.bottom && c.bottom > f.top);
+    };
+    const schedule = () => { if (!pending) { pending = true; requestAnimationFrame(update); } };
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    update();
+  }
 })();
 
 (() => {
