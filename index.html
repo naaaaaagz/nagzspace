@@ -175,11 +175,18 @@
       transparent calc(50% + var(--hole) - 4px), #000 calc(50% + var(--hole) + 90px),
       #000 88%, transparent);
   }
-  .glyph-track { display: flex; width: max-content; opacity: .42; animation: glyph-scroll 150s linear infinite; }
+  .glyphline { display: flex; }
+  .glyph-side { display: flex; flex: 1 1 0; min-width: 0; overflow: hidden; }
+  .glyph-side.left { justify-content: flex-end; }   /* track overflows leftwards, its end at the logo */
+  .glyph-track { display: flex; flex-shrink: 0; width: max-content; opacity: .42; animation: 150s linear infinite; }
+  .left .glyph-track { animation-name: glyph-out-left; }
+  .right .glyph-track { animation-name: glyph-out-right; }
   .glyph-set { display: flex; align-items: center; flex-shrink: 0; }
   .glyph-set span { padding: 0 14px; white-space: nowrap; unicode-bidi: isolate; letter-spacing: .06em; }
   .glyph-set i { flex-shrink: 0; width: 160px; height: 1px; background: currentColor; opacity: .5; }
-  @keyframes glyph-scroll { to { transform: translateX(-50%); } }
+  /* both sides travel the same distance in the same time, so the tempo matches */
+  @keyframes glyph-out-left { from { transform: translateX(50%); } to { transform: none; } }
+  @keyframes glyph-out-right { from { transform: translateX(-50%); } to { transform: none; } }
 
   /* ---------- cards ---------- */
   .cards {
@@ -329,11 +336,20 @@
 <div class="page">
   <header class="intro">
     <h1 class="logo-wrap"><img class="logo" src="nagzlogo_transp_white.png" alt="Nagz" width="778" height="260"></h1>
-    <!-- "nagz" in many scripts; the second set repeats the first for a seamless loop -->
+    <!-- "nagz" in many scripts, radiating out from the logo on both sides -->
     <div class="glyphline" aria-hidden="true">
-      <div class="glyph-track">
-        <div class="glyph-set"><span>𑁝𑁛𑁯𑁡</span><i></i><span>𐌿𐌰𐌾𐌶</span><i></i><span>🝠🜁🝭🜩</span><i></i><span>ՈԹՃՁ</span><i></i><span>ռձցջ</span><i></i><span>৸৭ৎ৶</span><i></i><span>ㄇㄙㆠㄋ</span><i></i><span>ᨈᨊᨌᨄ</span><i></i><span>𐊪𐊠𐋃𐋀</span><i></i><span>ᏁᎯᏵᎼ</span><i></i><span>nagz</span><i></i><span>门丹厶之</span><i></i><span>ꃞꎁꁅꑓ</span><i></i><span>ⲛⲁⳓⲹ</span><i></i><span>𒀃𒋻𒌷𒌭</span><i></i><span>₦₳₲₹</span><i></i><span>𐑍𐐨𐐾𐑌</span><i></i><span>𓉖𓂇𓌆𓃇</span><i></i><span>ኪሷፍጊ</span><i></i><span>იმჵჷ</span><i></i><span>ល៦១ឱ</span><i></i><span>ດຄເໄ</span><i></i><span>לפםה</span><i></i><span>റ൧൭ഉ</span><i></i><span>ꩳꩫ၎ဥ</span><i></i><span>ᱴᱧ᱙ᱮ</span><i></i><span>𐒌𐒚𐒛𐒒</span><i></i><span>NAGZ</span><i></i><span>𐑽𐑔𐑜𐑯</span><i></i><span>หค๔ใ</span><i></i><span>ⵄⴷⵛⵒ</span><i></i><span>ᑙᐄᑵᖢ</span><i></i><span>ꘗꕖꕄꔧ</span><i></i><span>ꏢꒈꐱꉓ</span><i></i></div>
-        <div class="glyph-set"><span>𑁝𑁛𑁯𑁡</span><i></i><span>𐌿𐌰𐌾𐌶</span><i></i><span>🝠🜁🝭🜩</span><i></i><span>ՈԹՃՁ</span><i></i><span>ռձցջ</span><i></i><span>৸৭ৎ৶</span><i></i><span>ㄇㄙㆠㄋ</span><i></i><span>ᨈᨊᨌᨄ</span><i></i><span>𐊪𐊠𐋃𐋀</span><i></i><span>ᏁᎯᏵᎼ</span><i></i><span>nagz</span><i></i><span>门丹厶之</span><i></i><span>ꃞꎁꁅꑓ</span><i></i><span>ⲛⲁⳓⲹ</span><i></i><span>𒀃𒋻𒌷𒌭</span><i></i><span>₦₳₲₹</span><i></i><span>𐑍𐐨𐐾𐑌</span><i></i><span>𓉖𓂇𓌆𓃇</span><i></i><span>ኪሷፍጊ</span><i></i><span>იმჵჷ</span><i></i><span>ល៦១ឱ</span><i></i><span>ດຄເໄ</span><i></i><span>לפםה</span><i></i><span>റ൧൭ഉ</span><i></i><span>ꩳꩫ၎ဥ</span><i></i><span>ᱴᱧ᱙ᱮ</span><i></i><span>𐒌𐒚𐒛𐒒</span><i></i><span>NAGZ</span><i></i><span>𐑽𐑔𐑜𐑯</span><i></i><span>หค๔ใ</span><i></i><span>ⵄⴷⵛⵒ</span><i></i><span>ᑙᐄᑵᖢ</span><i></i><span>ꘗꕖꕄꔧ</span><i></i><span>ꏢꒈꐱꉓ</span><i></i></div>
+      <!-- each side carries the same words in a different order; the second set repeats the first for a seamless loop -->
+      <div class="glyph-side left">
+        <div class="glyph-track">
+          <div class="glyph-set"><span>门丹厶之</span><i></i><span>ꃞꎁꁅꑓ</span><i></i><span>ⲛⲁⳓⲹ</span><i></i><span>𒀃𒋻𒌷𒌭</span><i></i><span>₦₳₲₹</span><i></i><span>𐑍𐐨𐐾𐑌</span><i></i><span>𓉖𓂇𓌆𓃇</span><i></i><span>ኪሷፍጊ</span><i></i><span>იმჵჷ</span><i></i><span>ល៦១ឱ</span><i></i><span>ດຄເໄ</span><i></i><span>לפםה</span><i></i><span>റ൧൭ഉ</span><i></i><span>ꩳꩫ၎ဥ</span><i></i><span>ᱴᱧ᱙ᱮ</span><i></i><span>𐒌𐒚𐒛𐒒</span><i></i><span>NAGZ</span><i></i><span>𐑽𐑔𐑜𐑯</span><i></i><span>หค๔ใ</span><i></i><span>ⵄⴷⵛⵒ</span><i></i><span>ᑙᐄᑵᖢ</span><i></i><span>ꘗꕖꕄꔧ</span><i></i><span>ꏢꒈꐱꉓ</span><i></i><span>𑁝𑁛𑁯𑁡</span><i></i><span>𐌿𐌰𐌾𐌶</span><i></i><span>🝠🜁🝭🜩</span><i></i><span>ՈԹՃՁ</span><i></i><span>ռձցջ</span><i></i><span>৸৭ৎ৶</span><i></i><span>ㄇㄙㆠㄋ</span><i></i><span>ᨈᨊᨌᨄ</span><i></i><span>𐊪𐊠𐋃𐋀</span><i></i><span>ᏁᎯᏵᎼ</span><i></i><span>nagz</span><i></i></div>
+          <div class="glyph-set"><span>门丹厶之</span><i></i><span>ꃞꎁꁅꑓ</span><i></i><span>ⲛⲁⳓⲹ</span><i></i><span>𒀃𒋻𒌷𒌭</span><i></i><span>₦₳₲₹</span><i></i><span>𐑍𐐨𐐾𐑌</span><i></i><span>𓉖𓂇𓌆𓃇</span><i></i><span>ኪሷፍጊ</span><i></i><span>იმჵჷ</span><i></i><span>ល៦១ឱ</span><i></i><span>ດຄເໄ</span><i></i><span>לפםה</span><i></i><span>റ൧൭ഉ</span><i></i><span>ꩳꩫ၎ဥ</span><i></i><span>ᱴᱧ᱙ᱮ</span><i></i><span>𐒌𐒚𐒛𐒒</span><i></i><span>NAGZ</span><i></i><span>𐑽𐑔𐑜𐑯</span><i></i><span>หค๔ใ</span><i></i><span>ⵄⴷⵛⵒ</span><i></i><span>ᑙᐄᑵᖢ</span><i></i><span>ꘗꕖꕄꔧ</span><i></i><span>ꏢꒈꐱꉓ</span><i></i><span>𑁝𑁛𑁯𑁡</span><i></i><span>𐌿𐌰𐌾𐌶</span><i></i><span>🝠🜁🝭🜩</span><i></i><span>ՈԹՃՁ</span><i></i><span>ռձցջ</span><i></i><span>৸৭ৎ৶</span><i></i><span>ㄇㄙㆠㄋ</span><i></i><span>ᨈᨊᨌᨄ</span><i></i><span>𐊪𐊠𐋃𐋀</span><i></i><span>ᏁᎯᏵᎼ</span><i></i><span>nagz</span><i></i></div>
+        </div>
+      </div>
+      <div class="glyph-side right">
+        <div class="glyph-track">
+          <div class="glyph-set"><span>NAGZ</span><i></i><span>𐒌𐒚𐒛𐒒</span><i></i><span>ᱴᱧ᱙ᱮ</span><i></i><span>ꩳꩫ၎ဥ</span><i></i><span>റ൧൭ഉ</span><i></i><span>לפםה</span><i></i><span>ດຄເໄ</span><i></i><span>ល៦១ឱ</span><i></i><span>იმჵჷ</span><i></i><span>ኪሷፍጊ</span><i></i><span>𓉖𓂇𓌆𓃇</span><i></i><span>𐑍𐐨𐐾𐑌</span><i></i><span>₦₳₲₹</span><i></i><span>𒀃𒋻𒌷𒌭</span><i></i><span>ⲛⲁⳓⲹ</span><i></i><span>ꃞꎁꁅꑓ</span><i></i><span>门丹厶之</span><i></i><span>nagz</span><i></i><span>ᏁᎯᏵᎼ</span><i></i><span>𐊪𐊠𐋃𐋀</span><i></i><span>ᨈᨊᨌᨄ</span><i></i><span>ㄇㄙㆠㄋ</span><i></i><span>৸৭ৎ৶</span><i></i><span>ռձցջ</span><i></i><span>ՈԹՃՁ</span><i></i><span>🝠🜁🝭🜩</span><i></i><span>𐌿𐌰𐌾𐌶</span><i></i><span>𑁝𑁛𑁯𑁡</span><i></i><span>ꏢꒈꐱꉓ</span><i></i><span>ꘗꕖꕄꔧ</span><i></i><span>ᑙᐄᑵᖢ</span><i></i><span>ⵄⴷⵛⵒ</span><i></i><span>หค๔ใ</span><i></i><span>𐑽𐑔𐑜𐑯</span><i></i></div>
+          <div class="glyph-set"><span>NAGZ</span><i></i><span>𐒌𐒚𐒛𐒒</span><i></i><span>ᱴᱧ᱙ᱮ</span><i></i><span>ꩳꩫ၎ဥ</span><i></i><span>റ൧൭ഉ</span><i></i><span>לפםה</span><i></i><span>ດຄເໄ</span><i></i><span>ល៦១ឱ</span><i></i><span>იმჵჷ</span><i></i><span>ኪሷፍጊ</span><i></i><span>𓉖𓂇𓌆𓃇</span><i></i><span>𐑍𐐨𐐾𐑌</span><i></i><span>₦₳₲₹</span><i></i><span>𒀃𒋻𒌷𒌭</span><i></i><span>ⲛⲁⳓⲹ</span><i></i><span>ꃞꎁꁅꑓ</span><i></i><span>门丹厶之</span><i></i><span>nagz</span><i></i><span>ᏁᎯᏵᎼ</span><i></i><span>𐊪𐊠𐋃𐋀</span><i></i><span>ᨈᨊᨌᨄ</span><i></i><span>ㄇㄙㆠㄋ</span><i></i><span>৸৭ৎ৶</span><i></i><span>ռձցջ</span><i></i><span>ՈԹՃՁ</span><i></i><span>🝠🜁🝭🜩</span><i></i><span>𐌿𐌰𐌾𐌶</span><i></i><span>𑁝𑁛𑁯𑁡</span><i></i><span>ꏢꒈꐱꉓ</span><i></i><span>ꘗꕖꕄꔧ</span><i></i><span>ᑙᐄᑵᖢ</span><i></i><span>ⵄⴷⵛⵒ</span><i></i><span>หค๔ใ</span><i></i><span>𐑽𐑔𐑜𐑯</span><i></i></div>
+        </div>
       </div>
     </div>
   </header>
