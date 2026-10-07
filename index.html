@@ -334,10 +334,10 @@
     .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
   @media (max-width: 560px) {
-    /* one project per row; the three SOON cards share a row */
-    .cards { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; }
-    .card { grid-column: span 6; min-height: 0; }
-    .card.soon { grid-column: span 2; min-height: 64px; font-size: .6rem; letter-spacing: .2em; }
+    /* one card per row; the SOON cards are full width but shorter */
+    .cards { grid-template-columns: 1fr; gap: 10px; }
+    .card { min-height: 0; }
+    .card.soon { min-height: 56px; }
   }
   @media (prefers-reduced-motion: reduce) {
     .intro, .footer, .chill-toggle { transition: none; }
