@@ -188,10 +188,79 @@
   @keyframes glyph-out-left { from { transform: translateX(50%); } to { transform: none; } }
   @keyframes glyph-out-right { from { transform: translateX(-50%); } to { transform: none; } }
 
+  /* ---------- manifesto button + dialog ---------- */
+  .manifesto-open {
+    display: block;
+    width: fit-content;
+    max-width: calc(100% - 32px);
+    margin: clamp(36px, 7vh, 64px) auto 0;
+    padding: 9px 32px;
+    border: 1px solid var(--card-edge);
+    border-radius: 4px;
+    background: var(--card);
+    -webkit-backdrop-filter: blur(3px);
+            backdrop-filter: blur(3px);
+    color: #c4b5ff;   /* soft lavender, set apart from the white card text */
+    font-family: var(--font);
+    font-size: .68rem;
+    font-weight: 400;
+    letter-spacing: .14em;
+    line-height: 1.5;
+    cursor: pointer;
+    transition: opacity .8s ease, border-color .25s ease, color .25s ease;
+  }
+  .manifesto-open:hover, .manifesto-open:focus-visible { border-color: var(--card-edge-hover); color: var(--ink); }
+  .manifesto-open:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+  body.chilling .manifesto-open { opacity: 0; }
+
+  .manifesto {
+    width: min(980px, calc(100% - 32px));
+    max-height: min(85vh, 85dvh);
+    margin: auto;
+    padding: 0;
+    overflow: hidden;   /* the text scrolls inside, so a scrollbar click never counts as a backdrop click */
+    border: 1px solid var(--card-edge);
+    border-radius: 4px;
+    background: rgba(10, 12, 32, .9);
+    color: var(--soft);
+    font-family: var(--font);
+  }
+  .manifesto::backdrop {
+    background: rgba(3, 4, 13, .6);
+    -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
+  }
+  html:has(.manifesto[open]) { overflow: hidden; }   /* the page behind does not scroll */
+  .manifesto-body {
+    max-height: calc(min(85vh, 85dvh) - 2px);
+    overflow-y: auto;
+    padding: 34px 30px 26px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(200, 208, 255, .25) transparent;
+  }
+  .manifesto p { margin: 0 0 .9em; font-size: .88rem; font-weight: 300; line-height: 1.6; }
+  .manifesto p:last-child { margin-bottom: 0; }
+  .manifesto-close {
+    position: absolute;
+    top: 8px; right: 16px;   /* clear of the text's scrollbar */
+    display: grid;
+    place-items: center;
+    width: 28px; height: 28px;
+    padding: 0;
+    border: 0;
+    border-radius: 4px;
+    background: none;
+    color: var(--soft);
+    cursor: pointer;
+  }
+  .manifesto-close svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 1.6; }
+  .manifesto-close:hover, .manifesto-close:focus-visible { color: var(--ink); background: rgba(255, 255, 255, .08); }
+  .manifesto-close:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
   /* ---------- cards ---------- */
   .cards {
     width: min(1080px, calc(100% - 32px));
-    margin: clamp(36px, 7vh, 64px) auto 0;
+    margin: 14px auto 0;
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 14px;
@@ -335,12 +404,14 @@
   }
   @media (max-width: 560px) {
     /* one card per row; the SOON cards are full width but shorter */
-    .cards { grid-template-columns: 1fr; gap: 10px; }
+    .cards { grid-template-columns: 1fr; gap: 10px; margin-top: 10px; }
+    .manifesto-open { width: calc(100% - 32px); padding: 9px 16px; }
+    .manifesto-body { padding: 34px 20px 22px; }
     .card { min-height: 0; }
     .card.soon { min-height: 56px; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .intro, .footer, .chill-toggle { transition: none; }
+    .intro, .footer, .chill-toggle, .manifesto-open { transition: none; }
     .glyph-track { animation: none; }
     .card, .card svg, .card .emoji, a.card::before, a.card::after { transition: none; }
   }
@@ -373,6 +444,7 @@
     </div>
   </header>
 
+  <button class="manifesto-open" type="button" aria-haspopup="dialog" aria-controls="manifesto">My word on the responsible use of today’s tech landscape</button>
 
   <main class="cards" aria-label="What I do">
     <a class="card hire" href="https://davidhalmi.com/" target="_blank" rel="noopener noreferrer">
@@ -425,6 +497,21 @@
   </nav>
 </footer>
 
+<dialog id="manifesto" class="manifesto" aria-label="My word on the responsible use of today’s tech landscape">
+  <button class="manifesto-close" type="button" aria-label="Close"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 2l8 8M10 2l-8 8"/></svg></button>
+  <div class="manifesto-body">
+    <p>To put it short: the creation of the sites linked below - including this one - was AI assisted, but my works were not.</p>
+    <p>We live in an increasingly confusing world where LLMs and their related tools are shouldering more and more of our tasks, are replacing soul and creativity and in accord with how compartmentalized our society is becoming, are needlessly but understandably anthropomorphized. One thing seems to be sure: despite all of its dystopian undertones and bleak prophesied ramifications, AI is here to stay and will make things more convenient for most.</p>
+    <p>But please remember, it’s just a tool. And a tool is not your friend, it’s merely a tool and we tend to forget that. The perks however are undeniable, we can all do our part and swear to use it responsibly, enabling it to do the gruntwork if need be, but denying it to replace human soul and our voice. The time of cycling pandas, Ozzy singing Britney’s songs and long copies with em dashes and forced bullet points has to come to an end, because an ingenuine world breeds only more ingenuine people, who shamelessly (and worse: gleefully) take a nosedive into a substance-free world. And meme-ingly put: dats not good. We all have to draw the line somewhere, figuratively and - for graphic artists - literally.</p>
+    <p>Yes, I will keep creating websites and applications using my agents to convey my music, my ideas and my art, simple because i am not a coder..</p>
+    <p>No, I will not let AI partake in the creation of my music, art, or my core ideas that I build upon.</p>
+    <p>Yes, I will study, utilize and at times even advocate AI use as a smart tool to allow us to focus on our message.</p>
+    <p>No, I will not let it overtake the focused process of artistry, thus robbing me of the joy of creation, even if it can get painstaking at times, because that’s the fuckin’ beauty of it.</p>
+    <p>The above manifesto was thought up and typed in with my own two hands.</p>
+    <p>2026, nagz</p>
+  </div>
+</dialog>
+
 <script>
 (() => {
   // Device identity, rather than viewport width, keeps narrow desktops on mouse controls.
@@ -456,6 +543,12 @@
     window.addEventListener('resize', schedule);
     update();
   }
+
+  // Manifesto: native modal dialog (Esc closes it); a click on the backdrop or the X also closes it.
+  const manifesto = document.getElementById('manifesto');
+  document.querySelector('.manifesto-open').addEventListener('click', () => manifesto.showModal());
+  manifesto.querySelector('.manifesto-close').addEventListener('click', () => manifesto.close());
+  manifesto.addEventListener('click', (event) => { if (event.target === manifesto) manifesto.close(); });
 })();
 
 (() => {
